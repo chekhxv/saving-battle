@@ -10,10 +10,12 @@ function useData() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const load = useCallback(async () => {
+  const load = useCallback(async (refresh = false) => {
     try {
       setError(null);
-      const res = await fetch('/api/data', { cache: 'no-store' });
+      const res = await fetch(refresh ? '/api/data?refresh=1' : '/api/data', {
+        cache: 'no-store',
+      });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       setData((await res.json()) as ApiData);
     } catch (e) {
@@ -135,7 +137,7 @@ export default function App() {
 
   const refresh = async () => {
     setRefreshing(true);
-    await reload();
+    await reload(true);
     setRefreshing(false);
   };
 
