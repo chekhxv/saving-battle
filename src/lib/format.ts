@@ -1,7 +1,11 @@
-const moneyFmt = new Intl.NumberFormat('ru-RU', { maximumFractionDigits: 0 });
+const kopFmt = new Intl.NumberFormat('ru-RU', {
+  minimumFractionDigits: 2,
+  maximumFractionDigits: 2,
+});
 
 export function money(n: number): string {
-  return moneyFmt.format(Math.round(n)) + ' ₽';
+  // Всегда показываем копейки (например 5 000,00 ₽).
+  return kopFmt.format(n) + ' ₽';
 }
 
 /** Компактная запись: 1 250 000 → 1,25 млн */

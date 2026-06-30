@@ -79,9 +79,10 @@ export async function fetchCrowdInfo(ref: CrowdRef): Promise<PlayerSnapshot> {
   const ownerName = [owner.firstName, owner.lastName].filter(Boolean).join(' ').trim();
 
   return {
-    collectSum: Math.round(p.collectSum?.value ?? 0),
-    goal: Math.round(p.info.collectAmount?.value ?? 0),
-    balance: Math.round(p.balance?.value ?? 0),
+    // Храним точные значения с копейками (T-Bank отдаёт, напр., 1234.5600).
+    collectSum: p.collectSum?.value ?? 0,
+    goal: p.info.collectAmount?.value ?? 0,
+    balance: p.balance?.value ?? 0,
     daysLeft: typeof p.daysLeft === 'number' ? p.daysLeft : null,
     status: p.info.status ?? 'Unknown',
     ownerName: ownerName || 'Без имени',
