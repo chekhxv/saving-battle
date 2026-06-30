@@ -1,0 +1,19 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+  functions = "netlify/functions"
+
+[functions]
+  node_bundler = "esbuild"
+
+# Удобные короткие пути к функциям: /api/data, /api/collect
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
+
+# SPA-fallback для React Router-подобной навигации
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
